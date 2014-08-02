@@ -1,13 +1,28 @@
 var uQuery = (function(){
 	// SELECTORS
+
+	var _type = function(obj) {
+		return Object.prototype.toString.call(obj).replace(/^\[object (.+)\]$/, "$1").toLowerCase();
+	};
 	
 	var $ = function(obj) {
+		var t = _type(obj);
 
-		// if is element, 
-
-		// or instance of selector
-
-		return document.querySelectorAll(selectorString);
+		if (t === "string") {
+			var selectors = document.querySelectorAll(selectorString);
+			switch(selectors.length) {
+				case 0:
+					return null;
+				case 1:
+					return selectors[0];
+				case 2:
+					return selectors
+			}
+		} else {
+			// is an element
+			// TODO - return special closure that provides convenience methods 
+			// for a selected element
+		}		
 	};
 	// private methods go here
 
@@ -133,9 +148,7 @@ var uQuery = (function(){
 		return string.trim();
 	}
 
-	$.type = function(obj) {
-		return Object.prototype.toString.call(obj).replace(/^\[object (.+)\]$/, "$1").toLowerCase();
-	};
+	$.type = _type;
 
 
 
